@@ -1,0 +1,6 @@
+@altsystems.transporte.Api.ERP_TransporteCargas_API_HostAddress = http://localhost:5065
+
+GET {{altsystems.transporte.Api.ERP_TransporteCargas_API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
