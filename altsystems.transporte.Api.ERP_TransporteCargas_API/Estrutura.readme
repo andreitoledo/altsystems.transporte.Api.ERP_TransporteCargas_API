@@ -4,6 +4,7 @@
 │   ├── VeiculosController.cs - OK
 │   ├── CargasController.cs
 │   ├── PedidosController.cs
+|   |-- TransportadorasController.cs
 │   └── RelatoriosController.cs
 │
 ├── /Models                # Contém os modelos de dados (representação das tabelas do banco)
