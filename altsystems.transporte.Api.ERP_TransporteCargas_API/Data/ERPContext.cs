@@ -13,6 +13,7 @@
         public DbSet<Transportadora> Transportadoras { get; set; }
         public DbSet<PedidoTransporte> PedidosTransporte { get; set; }
         public DbSet<RelatorioFinanceiro> RelatoriosFinanceiros { get; set; }
+        public DbSet<Usuario> Usuarios { get; set; }
     }
 
 }
