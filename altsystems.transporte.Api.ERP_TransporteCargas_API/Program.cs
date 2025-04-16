@@ -4,6 +4,17 @@ using altsystems.transporte.Api.ERP_TransporteCargas_API.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Adicionar suporte para CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowVueJs", policy =>
+    {
+        policy.WithOrigins("http://localhost:8080")  // URL do Vue.js
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 // Verificar se a ConnectionString está presente
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 if (string.IsNullOrEmpty(connectionString))
@@ -23,6 +34,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+// Usar CORS
+app.UseCors("AllowVueJs");  // Aplica o CORS com a política configurada
 
 // Configuração do Swagger para visualizar a documentação da API
 if (app.Environment.IsDevelopment())

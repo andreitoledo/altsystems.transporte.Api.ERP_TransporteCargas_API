@@ -25,9 +25,29 @@ public class VeiculosController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<Veiculo>> PostVeiculo(Veiculo veiculo)
     {
-        _context.Veiculos.Add(veiculo);
-        await _context.SaveChangesAsync();
+        try
+        {
+            // Atribui a data de criação automaticamente (caso não tenha sido enviada)
+            if (veiculo.DataCadastro == default)
+            {
+                veiculo.DataCadastro = DateTime.Now;
+            }
 
-        return CreatedAtAction("GetVeiculos", new { id = veiculo.Id }, veiculo);
+            _context.Veiculos.Add(veiculo);
+            await _context.SaveChangesAsync();
+            return CreatedAtAction("GetVeiculos", new { id = veiculo.Id }, veiculo);
+        }
+        catch (Exception ex)
+        {
+            // Log o erro para depuração
+            Console.WriteLine(ex.Message);
+            return StatusCode(500, "Erro ao salvar o veículo: " + ex.Message);
+        }
+
+
+        //_context.Veiculos.Add(veiculo);
+        //await _context.SaveChangesAsync();
+
+        //return CreatedAtAction("GetVeiculos", new { id = veiculo.Id }, veiculo);
     }
 }

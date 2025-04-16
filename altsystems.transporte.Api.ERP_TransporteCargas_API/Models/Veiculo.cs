@@ -7,7 +7,8 @@
         public string Tipo { get; set; }
         public int Capacidade { get; set; }
         public int Ano { get; set; }
-        public DateTime DataCadastro { get; set; }
-    }
 
+        // Definir o valor automaticamente ao criar o veículo
+        public DateTime DataCadastro { get; set; } = DateTime.Now;
+    }
 }

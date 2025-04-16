@@ -1,21 +1,21 @@
 ﻿/altsystems.transporte.Api.ERP_TransporteCargas_API
 │
 ├── /Controllers           # Contém os controllers que expõem a API
-│   ├── VeiculosController.cs
+│   ├── VeiculosController.cs - OK
 │   ├── CargasController.cs
 │   ├── PedidosController.cs
 │   └── RelatoriosController.cs
 │
 ├── /Models                # Contém os modelos de dados (representação das tabelas do banco)
-│   ├── Veiculo.cs
-│   ├── Carga.cs
-│   ├── Cliente.cs
-│   ├── Transportadora.cs
-│   ├── PedidoTransporte.cs
-│   └── RelatorioFinanceiro.cs
+│   ├── Veiculo.cs - OK
+│   ├── Carga.cs - OK
+│   ├── Cliente.cs - OK
+│   ├── Transportadora.cs - OK
+│   ├── PedidoTransporte.cs - OK
+│   └── RelatorioFinanceiro.cs - OK
 │
 ├── /Data                  # Contém a lógica de acesso a dados, DbContext e configurações
-│   ├── ERPContext.cs      # DbContext para trabalhar com o banco de dados
+│   ├── ERPContext.cs - OK     # DbContext para trabalhar com o banco de dados
 │   └── Repository         # Caso você utilize um padrão de repositório
 │
 ├── /Services              # Contém a lógica de negócios e regras específicas
@@ -30,11 +30,11 @@
 │
 ├── /Configurations        # Configurações e injeções de dependência
 │   ├── SwaggerConfig.cs   # Configurações do Swagger (documentação da API)
-│   └── Startup.cs         # Inicialização do projeto e configuração do DI
+│   └── Startup.cs - NÃO TEM # Inicialização do projeto e configuração do DI
 │
 ├── /Migrations            # Scripts e arquivos relacionados às migrações do Entity Framework
 │   └── <Migração_Codigo>.cs
 │
-├── appsettings.json       # Arquivo de configurações do aplicativo, incluindo a string de conexão
-├── Program.cs             # Ponto de entrada para a aplicação
-└── Startup.cs             # Configuração inicial do projeto (se necessário em versões mais antigas do .NET)
+├── appsettings.json - OK      # Arquivo de configurações do aplicativo, incluindo a string de conexão
+├── Program.cs - OK             # Ponto de entrada para a aplicação
+└── Startup.cs - NÃO TEM            # Configuração inicial do projeto (se necessário em versões mais antigas do .NET)
