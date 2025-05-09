@@ -14,3 +14,12 @@ export const getClienteById = async (id) => {
   const response = await api.get(`/Cliente/${id}`);
   return response.data;
 };
+
+export const updateCliente = async (id, cliente) => {
+  const response = await api.put(`/Cliente/${id}`, cliente);
+  return response.data;
+};
+
+export const deleteCliente = async (id) => {
+  await api.delete(`/Cliente/${id}`);
+};

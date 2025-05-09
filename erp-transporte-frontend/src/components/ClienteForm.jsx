@@ -1,38 +1,61 @@
-import { Box, Button, Grid, TextField } from '@mui/material';
-import { useState } from 'react';
 
-const ClienteForm = ({ onSubmit, initialData = {} }) => {
+import { useEffect, useState } from 'react';
+import { Box, TextField, Button } from '@mui/material';
+
+const ClienteForm = ({ cliente = {}, onSubmit, onCancel }) => {
   const [form, setForm] = useState({
-    nome: initialData.nome || '',
-    email: initialData.email || '',
-    telefone: initialData.telefone || ''
+    nome: '',
+    email: '',
+    telefone: ''
   });
+
+  useEffect(() => {
+    if (cliente) {
+      setForm({
+        nome: cliente.nome || '',
+        email: cliente.email || '',
+        telefone: cliente.telefone || ''
+      });
+    }
+  }, [cliente]);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSubmit(form);
+  const handleSubmit = () => {
+    if (!form.nome || !form.email || !form.telefone) {
+      alert('Preencha todos os campos');
+      return;
+    }
+    onSubmit({ ...cliente, ...form });
   };
 
   return (
-    <Box component="form" onSubmit={handleSubmit} sx={{ mt: 2 }}>
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm={4}>
-          <TextField label="Nome" fullWidth name="nome" value={form.nome} onChange={handleChange} required />
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <TextField label="E-mail" fullWidth name="email" value={form.email} onChange={handleChange} required />
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <TextField label="Telefone" fullWidth name="telefone" value={form.telefone} onChange={handleChange} />
-        </Grid>
-        <Grid item xs={12}>
-          <Button type="submit" variant="contained">Salvar</Button>
-        </Grid>
-      </Grid>
+    <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
+      <TextField
+        name="nome"
+        label="Nome *"
+        value={form.nome}
+        onChange={handleChange}
+        fullWidth
+      />
+      <TextField
+        name="email"
+        label="E-mail *"
+        value={form.email}
+        onChange={handleChange}
+        fullWidth
+      />
+      <TextField
+        name="telefone"
+        label="Telefone *"
+        value={form.telefone}
+        onChange={handleChange}
+        fullWidth
+      />
+      <Button variant="contained" onClick={handleSubmit}>Salvar</Button>
+      {onCancel && <Button onClick={onCancel}>Cancelar</Button>}
     </Box>
   );
 };
