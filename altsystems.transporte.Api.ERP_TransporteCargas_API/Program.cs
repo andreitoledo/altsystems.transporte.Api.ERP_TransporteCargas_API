@@ -4,6 +4,9 @@ using altsystems.transporte.Api.ERP_TransporteCargas_API.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using altsystems.transporte.Api.ERP_TransporteCargas_API.Repositories.Implementations;
+using altsystems.transporte.Api.ERP_TransporteCargas_API.Repositories.Interfaces;
+using altsystems.transporte.Api.ERP_TransporteCargas_API.Services;
 
 
 
@@ -51,7 +54,21 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-// Adicionando suporte a controllers e API
+
+// Adicionando respositórios
+builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
+builder.Services.AddScoped<ICargaRepository, CargaRepository>();
+builder.Services.AddScoped<ITransportadoraRepository, TransportadoraRepository>();
+builder.Services.AddScoped<IVeiculoRepository, VeiculoRepository>();
+
+
+
+// Adicionando o serviços
+builder.Services.AddScoped<ClienteService>();
+builder.Services.AddScoped<CargaService>();
+builder.Services.AddScoped<TransportadoraService>();
+builder.Services.AddScoped<VeiculoService>();
+
 builder.Services.AddControllers();
 
 // Adicionando Swagger para documentação da API

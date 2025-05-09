@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using altsystems.transporte.Api.ERP_TransporteCargas_API.DTOs;
 using altsystems.transporte.Api.ERP_TransporteCargas_API.Models;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using altsystems.transporte.Api.ERP_TransporteCargas_API.Data;
+using altsystems.transporte.Api.ERP_TransporteCargas_API.Services;
 
 namespace altsystems.transporte.Api.ERP_TransporteCargas_API.Controllers
 {
@@ -11,120 +9,84 @@ namespace altsystems.transporte.Api.ERP_TransporteCargas_API.Controllers
     [ApiController]
     public class ClienteController : ControllerBase
     {
-        private readonly ERPContext _context;
+        private readonly ClienteService _clienteService;
 
-        public ClienteController(ERPContext context)
+        public ClienteController(ClienteService clienteService)
         {
-            _context = context;
+            _clienteService = clienteService;
         }
 
-        // GET: api/Cliente
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Cliente>>> GetClientes()
+        public async Task<ActionResult<IEnumerable<ClienteDTO>>> GetClientes()
         {
-            return await _context.Clientes.ToListAsync();
+            var clientes = await _clienteService.ListarClientesAsync();
+            var dtos = clientes.Select(c => new ClienteDTO
+            {
+                Id = c.Id,
+                Nome = c.Nome,
+                Email = c.Email,
+                Telefone = c.Telefone
+            });
+            return Ok(dtos);
         }
 
-        // GET: api/Cliente/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Cliente>> GetCliente(int id)
+        public async Task<ActionResult<ClienteDTO>> GetCliente(int id)
         {
-            var cliente = await _context.Clientes.FindAsync(id);
+            var cliente = await _clienteService.ObterClienteAsync(id);
+            if (cliente == null) return NotFound();
 
-            if (cliente == null)
+            return Ok(new ClienteDTO
             {
-                return NotFound();
-            }
-
-            return cliente;
+                Id = cliente.Id,
+                Nome = cliente.Nome,
+                Email = cliente.Email,
+                Telefone = cliente.Telefone
+            });
         }
 
-        // POST: api/Cliente
         [HttpPost]
-        public async Task<ActionResult<Cliente>> PostCliente(Cliente cliente)
+        public async Task<ActionResult<ClienteDTO>> PostCliente(ClienteCreateDTO dto)
         {
-            _context.Clientes.Add(cliente);
-            await _context.SaveChangesAsync();
+            var cliente = new Cliente
+            {
+                Nome = dto.Nome,
+                Email = dto.Email,
+                Telefone = dto.Telefone
+            };
 
-            return CreatedAtAction(nameof(GetCliente), new { id = cliente.Id }, cliente);
+            var criado = await _clienteService.CriarClienteAsync(cliente);
+            return CreatedAtAction(nameof(GetCliente), new { id = criado.Id }, new ClienteDTO
+            {
+                Id = criado.Id,
+                Nome = criado.Nome,
+                Email = criado.Email,
+                Telefone = criado.Telefone
+            });
         }
 
-        [HttpGet("{id}/Enderecos")]
-        public async Task<ActionResult<IEnumerable<Endereco>>> GetEnderecosByCliente(int id)
-        {
-            var cliente = await _context.Clientes
-                .Include(c => c.Enderecos)
-                .FirstOrDefaultAsync(c => c.Id == id);
-
-            if (cliente == null)
-                return NotFound();
-
-            return Ok(cliente.Enderecos);
-        }
-
-        [HttpGet("{id}/Contatos")]
-        public async Task<ActionResult<IEnumerable<Contato>>> GetContatosByCliente(int id)
-        {
-            var cliente = await _context.Clientes
-                .Include(c => c.Contatos)
-                .FirstOrDefaultAsync(c => c.Id == id);
-
-            if (cliente == null)
-                return NotFound();
-
-            return Ok(cliente.Contatos);
-        }
-
-
-        // PUT: api/Cliente/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCliente(int id, Cliente cliente)
+        public async Task<IActionResult> PutCliente(int id, ClienteUpdateDTO dto)
         {
-            if (id != cliente.Id)
-            {
-                return BadRequest();
-            }
+            var cliente = await _clienteService.ObterClienteAsync(id);
+            if (cliente == null) return NotFound();
 
-            _context.Entry(cliente).State = EntityState.Modified;
+            cliente.Nome = dto.Nome;
+            cliente.Email = dto.Email;
+            cliente.Telefone = dto.Telefone;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ClienteExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
+            await _clienteService.AtualizarClienteAsync(cliente);
             return NoContent();
         }
 
-        // DELETE: api/Cliente/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Cliente>> DeleteCliente(int id)
+        public async Task<IActionResult> DeleteCliente(int id)
         {
-            var cliente = await _context.Clientes.FindAsync(id);
-            if (cliente == null)
-            {
-                return NotFound();
-            }
+            var cliente = await _clienteService.ObterClienteAsync(id);
+            if (cliente == null) return NotFound();
 
-            _context.Clientes.Remove(cliente);
-            await _context.SaveChangesAsync();
-
-            return cliente;
-        }
-
-        private bool ClienteExists(int id)
-        {
-            return _context.Clientes.Any(e => e.Id == id);
+            await _clienteService.DeletarClienteAsync(id);
+            return NoContent();
         }
     }
 }
