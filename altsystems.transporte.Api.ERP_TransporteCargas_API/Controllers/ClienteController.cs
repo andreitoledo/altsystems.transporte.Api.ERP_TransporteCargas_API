@@ -49,6 +49,33 @@ namespace altsystems.transporte.Api.ERP_TransporteCargas_API.Controllers
             return CreatedAtAction(nameof(GetCliente), new { id = cliente.Id }, cliente);
         }
 
+        [HttpGet("{id}/Enderecos")]
+        public async Task<ActionResult<IEnumerable<Endereco>>> GetEnderecosByCliente(int id)
+        {
+            var cliente = await _context.Clientes
+                .Include(c => c.Enderecos)
+                .FirstOrDefaultAsync(c => c.Id == id);
+
+            if (cliente == null)
+                return NotFound();
+
+            return Ok(cliente.Enderecos);
+        }
+
+        [HttpGet("{id}/Contatos")]
+        public async Task<ActionResult<IEnumerable<Contato>>> GetContatosByCliente(int id)
+        {
+            var cliente = await _context.Clientes
+                .Include(c => c.Contatos)
+                .FirstOrDefaultAsync(c => c.Id == id);
+
+            if (cliente == null)
+                return NotFound();
+
+            return Ok(cliente.Contatos);
+        }
+
+
         // PUT: api/Cliente/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCliente(int id, Cliente cliente)

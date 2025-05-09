@@ -14,6 +14,23 @@
         public DbSet<PedidoTransporte> PedidosTransporte { get; set; }
         public DbSet<RelatorioFinanceiro> RelatoriosFinanceiros { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<Endereco> Enderecos { get; set; }
+        public DbSet<Contato> Contatos { get; set; }
+
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Cliente>()
+                .HasMany(c => c.Enderecos)
+                .WithOne(e => e.Cliente)
+                .HasForeignKey(e => e.ClienteId);
+
+            modelBuilder.Entity<Cliente>()
+                .HasMany(c => c.Contatos)
+                .WithOne(ct => ct.Cliente)
+                .HasForeignKey(ct => ct.ClienteId);
+        }
+
     }
 
 }

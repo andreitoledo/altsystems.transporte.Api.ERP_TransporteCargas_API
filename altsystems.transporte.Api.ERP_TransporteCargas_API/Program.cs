@@ -14,9 +14,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Adicionar suporte para CORS
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowVueJs", policy =>
+    options.AddPolicy("AllowReact", policy =>
     {
-        policy.WithOrigins("http://localhost:8080")  // URL do Vue.js
+        policy.WithOrigins("http://localhost:5173") // correto para React + Vite
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
@@ -60,8 +60,7 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Usar CORS
-app.UseCors("AllowVueJs");  // Aplica o CORS com a política configurada
+
 
 // Configuração do Swagger para visualizar a documentação da API
 if (app.Environment.IsDevelopment())
@@ -74,6 +73,10 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseRouting();
+
+// Usar CORS
+app.UseCors("AllowReact");  // Aplica o CORS com a política configurada
+
 app.UseAuthentication();
 app.UseAuthorization();
 
