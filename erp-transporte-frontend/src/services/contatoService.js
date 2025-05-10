@@ -1,7 +1,7 @@
 import api from './api';
 
 export const getContatosByCliente = async (clienteId) => {
-  const response = await api.get(`/Cliente/${clienteId}/Contatos`);
+  const response = await api.get(`/Cliente/${clienteId}/Contato`);
   return response.data;
 };
 

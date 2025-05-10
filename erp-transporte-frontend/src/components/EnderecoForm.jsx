@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Box, TextField, Button } from '@mui/material';
+import { Grid, TextField, Button, Box } from '@mui/material';
 
 const EnderecoForm = ({ endereco = {}, onSubmit, onCancel }) => {
   const [form, setForm] = useState({
@@ -31,12 +31,51 @@ const EnderecoForm = ({ endereco = {}, onSubmit, onCancel }) => {
   };
 
   return (
-    <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
-      <TextField name="logradouro" label="Logradouro *" value={form.logradouro} onChange={handleChange} fullWidth />
-      <TextField name="cidade" label="Cidade *" value={form.cidade} onChange={handleChange} fullWidth />
-      <TextField name="estado" label="UF *" value={form.estado} onChange={handleChange} fullWidth />
-      <Button variant="contained" onClick={handleSubmit}>Salvar</Button>
-      {onCancel && <Button onClick={onCancel}>Cancelar</Button>}
+    <Box sx={{ mb: 2 }}>
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={4}>
+          <TextField
+            name="logradouro"
+            label="Logradouro *"
+            value={form.logradouro}
+            onChange={handleChange}
+            fullWidth
+            variant="outlined"
+          />
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <TextField
+            name="cidade"
+            label="Cidade *"
+            value={form.cidade}
+            onChange={handleChange}
+            fullWidth
+            variant="outlined"
+          />
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <TextField
+            name="estado"
+            label="UF *"
+            value={form.estado}
+            onChange={handleChange}
+            fullWidth
+            variant="outlined"
+          />
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <Button variant="contained" onClick={handleSubmit} fullWidth>
+            Salvar
+          </Button>
+        </Grid>
+        <Grid item xs={12} md={6}>
+          {onCancel && (
+            <Button onClick={onCancel} fullWidth>
+              Cancelar
+            </Button>
+          )}
+        </Grid>
+      </Grid>
     </Box>
   );
 };

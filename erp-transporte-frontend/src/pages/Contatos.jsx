@@ -18,6 +18,8 @@ const Contatos = ({ clienteId }) => {
     setContatos(data);
   };
 
+  // Carregar contatos quando o clienteId mudar
+  // e quando o componente for montado
   useEffect(() => {
     if (clienteId) carregarContatos();
   }, [clienteId]);
