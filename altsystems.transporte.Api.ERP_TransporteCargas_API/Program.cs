@@ -60,6 +60,9 @@ builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
 builder.Services.AddScoped<ICargaRepository, CargaRepository>();
 builder.Services.AddScoped<ITransportadoraRepository, TransportadoraRepository>();
 builder.Services.AddScoped<IVeiculoRepository, VeiculoRepository>();
+builder.Services.AddScoped<IEnderecoRepository, EnderecoRepository>();
+builder.Services.AddScoped<IContatoRepository, ContatoRepository>();
+
 
 
 
@@ -68,6 +71,14 @@ builder.Services.AddScoped<ClienteService>();
 builder.Services.AddScoped<CargaService>();
 builder.Services.AddScoped<TransportadoraService>();
 builder.Services.AddScoped<VeiculoService>();
+
+builder.Services.AddScoped<IEnderecoService, EnderecoService>();
+builder.Services.AddScoped<IContatoService, ContatoService>();
+
+
+
+
+
 
 builder.Services.AddControllers();
 
