@@ -10,11 +10,14 @@ import {
   DialogContent,
   DialogContentText,
   DialogActions,
-  Tooltip, 
+  Tooltip,
   IconButton
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useNavigate } from 'react-router-dom';
+import InfoIcon from '@mui/icons-material/Info';
+
 
 const Clientes = () => {
   const [clientes, setClientes] = useState([]);
@@ -25,7 +28,7 @@ const Clientes = () => {
   const [openMsg, setOpenMsg] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
   const [confirmarExclusao, setConfirmarExclusao] = useState({ open: false, id: null });
-
+  const navigate = useNavigate();
 
   const carregarClientes = async () => {
     const data = await getClientes();
@@ -100,10 +103,6 @@ const Clientes = () => {
               width: 200,
               renderCell: (params) => (
                 <>
-                  {/* EDITAR EXCLUIR  */}
-                  {/* <Button size="small" onClick={() => handleEditar(params.row)}>Editar</Button>
-                  <Button size="small" color="error" onClick={() => handleExcluir(params.row.id)}>Excluir</Button> */}
-
                   <Tooltip title="Editar">
                     <IconButton onClick={() => handleEditar(params.row)}>
                       <EditIcon />
@@ -112,6 +111,13 @@ const Clientes = () => {
                   <Tooltip title="Excluir">
                     <IconButton color="error" onClick={() => handleExcluir(params.row.id)}>
                       <DeleteIcon />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title="Detalhes">
+                    <IconButton onClick={() => navigate(`/clientes/${params.row.id}/detalhe`)}
+                      size="small"
+                      >
+                      <InfoIcon />
                     </IconButton>
                   </Tooltip>
                 </>

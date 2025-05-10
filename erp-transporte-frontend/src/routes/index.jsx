@@ -15,8 +15,11 @@ const AppRoutes = () => (
           <Dashboard />
         </PrivateRoute>
       } />
-      <Route path="/clientes" element={<PrivateRoute><Clientes /></PrivateRoute>} />
-      <Route path="/cliente/:id/detalhe" element={<PrivateRoute><ClienteDetalhe /></PrivateRoute>} />
+      {/* <Route path="/clientes" element={<PrivateRoute><Clientes /></PrivateRoute>} /> */}
+      <Route path="/clientes" element={<Clientes />} />
+      {/* <Route path="/cliente/:id/detalhe" element={<PrivateRoute><ClienteDetalhe /></PrivateRoute>} /> */}
+      <Route path="/clientes/:id/detalhe" element={<ClienteDetalhe />} />
+
     </Routes>
   </Router>
 );

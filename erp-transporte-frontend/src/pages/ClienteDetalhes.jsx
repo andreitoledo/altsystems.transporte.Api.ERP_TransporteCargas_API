@@ -3,8 +3,8 @@ import { useParams } from 'react-router-dom';
 import { getClienteById } from '../services/clienteService';
 import { Box, CircularProgress, Tabs, Tab, Typography } from '@mui/material';
 import DadosGerais from '../components/DadosGerais';
-import Enderecos from '../components/Enderecos';
-import Contatos from '../components/Contatos';
+import Enderecos from '../pages/Enderecos';
+import Contatos from '../pages/Contatos';
 
 const ClienteDetalhes = () => {
   const { id } = useParams();
