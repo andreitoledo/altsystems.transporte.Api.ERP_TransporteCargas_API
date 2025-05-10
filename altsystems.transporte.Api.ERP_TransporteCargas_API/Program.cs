@@ -7,6 +7,10 @@ using System.Text;
 using altsystems.transporte.Api.ERP_TransporteCargas_API.Repositories.Implementations;
 using altsystems.transporte.Api.ERP_TransporteCargas_API.Repositories.Interfaces;
 using altsystems.transporte.Api.ERP_TransporteCargas_API.Services;
+using altsystems.transporte.Api.ERP_TransporteCargas_API.Services.Interfaces;
+using AutoMapper;
+using altsystems.transporte.Api.ERP_TransporteCargas_API.Mappings;
+
 
 
 
@@ -62,20 +66,17 @@ builder.Services.AddScoped<ITransportadoraRepository, TransportadoraRepository>(
 builder.Services.AddScoped<IVeiculoRepository, VeiculoRepository>();
 builder.Services.AddScoped<IEnderecoRepository, EnderecoRepository>();
 builder.Services.AddScoped<IContatoRepository, ContatoRepository>();
-
-
-
+builder.Services.AddScoped<IDadosGeraisRepository, DadosGeraisRepository>();
 
 // Adicionando o serviços
 builder.Services.AddScoped<ClienteService>();
 builder.Services.AddScoped<CargaService>();
 builder.Services.AddScoped<TransportadoraService>();
 builder.Services.AddScoped<VeiculoService>();
-
 builder.Services.AddScoped<IEnderecoService, EnderecoService>();
 builder.Services.AddScoped<IContatoService, ContatoService>();
-
-
+builder.Services.AddScoped<IDadosGeraisService, DadosGeraisService>();
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 
 
@@ -85,6 +86,8 @@ builder.Services.AddControllers();
 // Adicionando Swagger para documentação da API
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+// AutoMapper
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 

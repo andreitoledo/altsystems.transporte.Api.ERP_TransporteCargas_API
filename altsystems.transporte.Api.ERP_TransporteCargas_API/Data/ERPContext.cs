@@ -16,6 +16,7 @@
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Endereco> Enderecos { get; set; }
         public DbSet<Contato> Contatos { get; set; }
+        public DbSet<DadosGerais> DadosGerais { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -29,6 +30,12 @@
                 .HasMany(c => c.Contatos)
                 .WithOne(ct => ct.Cliente)
                 .HasForeignKey(ct => ct.ClienteId);
+
+            modelBuilder.Entity<Cliente>()
+                .HasMany(c => c.DadosGerais)
+                .WithOne(ct => ct.Cliente)
+                .HasForeignKey(ct => ct.ClienteId);
+
         }
 
     }
