@@ -27,6 +27,7 @@ namespace altsystems.transporte.Api.ERP_TransporteCargas_API.Services
         public async Task CriarOuAtualizarAsync(int clienteId, ClienteCnpjDTO dto)
         {
             var existente = await _repository.GetByClienteIdAsync(clienteId);
+
             if (existente == null)
             {
                 var novo = _mapper.Map<ClienteCnpj>(dto);

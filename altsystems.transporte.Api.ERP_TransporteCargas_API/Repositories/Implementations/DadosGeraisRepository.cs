@@ -58,6 +58,21 @@ namespace altsystems.transporte.Api.ERP_TransporteCargas_API.Repositories.Implem
             await _context.SaveChangesAsync();
         }
 
+        public async Task<List<DadosGerais>> ObterTodosPorClienteIdAsync(int clienteId)
+        {
+            return await _context.DadosGerais
+                .Where(d => d.ClienteId == clienteId)
+                .ToListAsync();
+        }
+
+        public async Task<DadosGerais> CriarAsync(DadosGerais dados)
+        {
+            _context.DadosGerais.Add(dados);
+            await _context.SaveChangesAsync();
+            return dados;
+        }
+
+
 
 
     }

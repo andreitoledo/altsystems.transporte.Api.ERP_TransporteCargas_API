@@ -3,6 +3,7 @@ using altsystems.transporte.Api.ERP_TransporteCargas_API.Models;
 using altsystems.transporte.Api.ERP_TransporteCargas_API.Repositories.Interfaces;
 using altsystems.transporte.Api.ERP_TransporteCargas_API.Services.Interfaces;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 
 public class DadosGeraisService : IDadosGeraisService
 {
@@ -19,6 +20,7 @@ public class DadosGeraisService : IDadosGeraisService
     {
         var dados = await _repo.ObterPorClienteIdAsync(clienteId);
         return _mapper.Map<DadosGeraisDTO>(dados);
+
     }
 
     public async Task<DadosGeraisDTO> SalvarAsync(int clienteId, DadosGeraisDTO dto)
@@ -46,5 +48,17 @@ public class DadosGeraisService : IDadosGeraisService
 
         await _repo.RemoverAsync(entity);
     }
+
+    public async Task<List<DadosGerais>> ObterTodosPorClienteIdAsync(int clienteId)
+    {
+        return await _repo.ObterTodosPorClienteIdAsync(clienteId);
+    }
+
+    public async Task<DadosGerais> CriarAsync(DadosGerais dados)
+    {
+        return await _repo.CriarAsync(dados);
+    }
+
+
 
 }

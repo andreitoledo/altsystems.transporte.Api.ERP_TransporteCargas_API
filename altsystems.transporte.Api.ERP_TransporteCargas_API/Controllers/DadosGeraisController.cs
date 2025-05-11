@@ -1,5 +1,7 @@
 ﻿using altsystems.transporte.Api.ERP_TransporteCargas_API.DTOs;
+using altsystems.transporte.Api.ERP_TransporteCargas_API.Models;
 using altsystems.transporte.Api.ERP_TransporteCargas_API.Services.Interfaces;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace altsystems.transporte.Api.ERP_TransporteCargas_API.Controllers
@@ -9,24 +11,29 @@ namespace altsystems.transporte.Api.ERP_TransporteCargas_API.Controllers
     public class DadosGeraisController : ControllerBase
     {
         private readonly IDadosGeraisService _service;
+        private readonly IMapper _mapper;
 
-        public DadosGeraisController(IDadosGeraisService service)
+        public DadosGeraisController(IDadosGeraisService service, IMapper mapper)
         {
             _service = service;
+            _mapper = mapper;
         }
 
         [HttpGet]
         public async Task<ActionResult<DadosGeraisDTO>> Get(int clienteId)
         {
-            var dados = await _service.ObterAsync(clienteId);
-            return Ok(dados);
+            var dados = await _service.ObterTodosPorClienteIdAsync(clienteId);
+            return Ok(_mapper.Map<IEnumerable<DadosGeraisDTO>>(dados));
         }
 
         [HttpPost]
         public async Task<ActionResult<DadosGeraisDTO>> Post(int clienteId, DadosGeraisDTO dto)
         {
-            var result = await _service.SalvarAsync(clienteId, dto);
-            return Ok(result);
+            var entity = _mapper.Map<DadosGerais>(dto);
+            entity.ClienteId = clienteId;
+
+            var result = await _service.CriarAsync(entity);
+            return Ok(_mapper.Map<DadosGeraisDTO>(result));
         }
 
         [HttpPut("{id}")]
