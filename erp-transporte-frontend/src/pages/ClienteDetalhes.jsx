@@ -2,9 +2,11 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getClienteById } from '../services/clienteService';
 import { Box, CircularProgress, Tabs, Tab, Typography } from '@mui/material';
-import DadosGerais from '../components/DadosGerais';
+import DadosGerais from '../pages/DadosGerais';
 import Enderecos from '../pages/Enderecos';
 import Contatos from '../pages/Contatos';
+import Cnpj from '../pages/Cnpj';
+import InscricaoEstadual from '../pages/InscricoesEstaduais';
 
 const ClienteDetalhes = () => {
   const { id } = useParams();
@@ -34,12 +36,16 @@ const ClienteDetalhes = () => {
         <Tab label="Dados Gerais" />
         <Tab label="Endereços" />
         <Tab label="Contatos" />
+        <Tab label="Cnpj" />
+        <Tab label="IEstadual" />
       </Tabs>
 
       <Box sx={{ p: 2 }}>
-        {tab === 0 && <DadosGerais cliente={cliente} />}
+      {tab === 0 && <DadosGerais clienteId={id} cliente={cliente} />}
         {tab === 1 && <Enderecos clienteId={id} />}
         {tab === 2 && <Contatos clienteId={id} />}
+        {tab === 3 && <Cnpj clienteId={id} />}
+        {tab === 4 && <InscricaoEstadual clienteId={id} />}
       </Box>
     </Box>
   );
