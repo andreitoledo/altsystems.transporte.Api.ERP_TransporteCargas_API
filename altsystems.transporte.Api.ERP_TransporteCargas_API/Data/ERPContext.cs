@@ -17,6 +17,8 @@
         public DbSet<Endereco> Enderecos { get; set; }
         public DbSet<Contato> Contatos { get; set; }
         public DbSet<DadosGerais> DadosGerais { get; set; }
+        public DbSet<ClienteCnpj> ClienteCnpjs { get; set; }
+        public DbSet<InscricaoEstadual> InscricoesEstaduais { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -35,6 +37,18 @@
                 .HasMany(c => c.DadosGerais)
                 .WithOne(ct => ct.Cliente)
                 .HasForeignKey(ct => ct.ClienteId);
+
+            // CNPJ - relação 1:1
+            modelBuilder.Entity<Cliente>()
+                .HasOne(c => c.Cnpj)
+                .WithOne(cc => cc.Cliente)
+                .HasForeignKey<ClienteCnpj>(cc => cc.ClienteId);
+
+            // Inscrições Estaduais - relação 1:N
+            modelBuilder.Entity<Cliente>()
+                .HasMany(c => c.InscricoesEstaduais)
+                .WithOne(ie => ie.Cliente)
+                .HasForeignKey(ie => ie.ClienteId);
 
         }
 
