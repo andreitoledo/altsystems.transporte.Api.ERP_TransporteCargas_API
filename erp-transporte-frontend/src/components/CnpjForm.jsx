@@ -31,10 +31,10 @@ const CnpjForm = ({ cnpjData = {}, onSubmit, onCancel }) => {
   return (
     <Box sx={{ mb: 2 }}>
       <Grid container spacing={2}>
-        <Grid item xs={12} md={6}>
+        <Grid xs={12} md={6}>
           <TextField label="CNPJ" name="cnpj" value={form.cnpj} onChange={handleChange} fullWidth />
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid xs={12} md={6}>
           <TextField
             label="Data de Cadastro"
             name="dataCadastro"
@@ -45,10 +45,10 @@ const CnpjForm = ({ cnpjData = {}, onSubmit, onCancel }) => {
             InputLabelProps={{ shrink: true }}
           />
         </Grid>
-        <Grid item xs={6}>
+        <Grid xs={6}>
           <Button variant="contained" onClick={handleSubmit} fullWidth>Salvar</Button>
         </Grid>
-        <Grid item xs={6}>
+        <Grid xs={6}>
           {onCancel && <Button onClick={onCancel} fullWidth>Cancelar</Button>}
         </Grid>
       </Grid>

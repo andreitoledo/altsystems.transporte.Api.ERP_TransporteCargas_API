@@ -5,8 +5,13 @@ export const getCnpjByCliente = async (clienteId) => {
   return data;
 };
 
-export const createOrUpdateCnpj = async (clienteId, cnpjData) => {
+export const createCnpj = async (clienteId, cnpjData) => {
   const { data } = await api.post(`/Cliente/${clienteId}/Cnpj`, cnpjData);
+  return data;
+};
+
+export const updateCnpj = async (clienteId, cnpjData) => {
+  const { data } = await api.put(`/Cliente/${clienteId}/Cnpj`, cnpjData);
   return data;
 };
 

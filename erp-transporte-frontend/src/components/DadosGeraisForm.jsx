@@ -1,59 +1,86 @@
 import { useEffect, useState } from 'react';
-import { Grid, TextField, Button, Box } from '@mui/material';
+import { Grid, TextField, Button, Box, FormControlLabel, Checkbox } from '@mui/material';
 
 const DadosGeraisForm = ({ dados = {}, onSubmit, onCancel }) => {
   const [form, setForm] = useState({
-    //cnpj: '',
-    //inscricaoEstadual: '',
+    ramoAtividade: '',
+    observacoes: '',
+    tipoCadastro: '',
+    statusCadastro: true,
     dataCadastro: ''
   });
 
   useEffect(() => {
     if (dados) {
       setForm({
-        //cnpj: dados.cnpj || '',
-        //inscricaoEstadual: dados.inscricaoEstadual || '',
+        ramoAtividade: dados.ramoAtividade || '',
+        observacoes: dados.observacoes || '',
+        tipoCadastro: dados.tipoCadastro || '',
+        statusCadastro: dados.statusCadastro ?? true,
         dataCadastro: dados.dataCadastro ? dados.dataCadastro.substring(0, 10) : ''
       });
     }
   }, [dados]);
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value, type, checked } = e.target;
+    setForm({ ...form, [name]: type === 'checkbox' ? checked : value });
   };
 
   const handleSubmit = () => {
     const { dataCadastro } = form;
-    if ( !dataCadastro) {
+    if (!dataCadastro) {
       alert('Preencha todos os campos obrigatórios.');
       return;
     }
-
     onSubmit({ ...dados, ...form });
   };
 
   return (
     <Box sx={{ mb: 2 }}>
       <Grid container spacing={2}>
-        {/* <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={6}>
           <TextField
-            name="cnpj"
-            label="CNPJ *"
-            value={form.cnpj}
+            name="ramoAtividade"
+            label="Ramo de Atividade"
+            value={form.ramoAtividade}
             onChange={handleChange}
             fullWidth
           />
-        </Grid> */}
-        {/* <Grid item xs={12} md={4}>
+        </Grid>
+        <Grid item xs={12} md={6}>
           <TextField
-            name="inscricaoEstadual"
-            label="Inscrição Estadual *"
-            value={form.inscricaoEstadual}
+            name="tipoCadastro"
+            label="Tipo de Cadastro"
+            value={form.tipoCadastro}
             onChange={handleChange}
             fullWidth
           />
-        </Grid> */}
-        <Grid item xs={12} md={4}>
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            name="observacoes"
+            label="Observações"
+            value={form.observacoes}
+            onChange={handleChange}
+            fullWidth
+            multiline
+            rows={3}
+          />
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <FormControlLabel
+            control={
+              <Checkbox
+                name="statusCadastro"
+                checked={form.statusCadastro}
+                onChange={handleChange}
+              />
+            }
+            label="Cadastro Ativo"
+          />
+        </Grid>
+        <Grid item xs={12} md={6}>
           <TextField
             name="dataCadastro"
             label="Data de Cadastro *"
@@ -64,7 +91,6 @@ const DadosGeraisForm = ({ dados = {}, onSubmit, onCancel }) => {
             InputLabelProps={{ shrink: true }}
           />
         </Grid>
-
         <Grid item xs={12} md={6}>
           <Button variant="contained" onClick={handleSubmit} fullWidth>
             Salvar

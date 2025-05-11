@@ -3,9 +3,10 @@ import { Box, Button, Snackbar, Alert } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import CnpjForm from '../components/CnpjForm';
 import {
-  getCnpjByCliente,
-  createOrUpdateCnpj,
-  deleteCnpj
+  getCnpjByCliente,  
+  deleteCnpj,
+  updateCnpj,
+  createCnpj
 } from '../services/cnpjService';
 
 const Cnpj = ({ clienteId }) => {
@@ -24,11 +25,20 @@ const Cnpj = ({ clienteId }) => {
   };
 
   useEffect(() => {
-    if (clienteId) carregar();
+    if (clienteId) {
+      getCnpjByCliente(clienteId)
+        .then(setCnpj)
+        .catch(() => setCnpj(null)); // Evita erro 500 quebrar a tela
+    }
   }, [clienteId]);
+  
 
   const handleSalvar = async (form) => {
-    await createOrUpdateCnpj(clienteId, form);
+    if (form.id && form.id !== 0) {
+      await updateCnpj(clienteId, form);
+    } else {
+      await createCnpj(clienteId, form);
+    }
     setMensagem('CNPJ salvo com sucesso!');
     setOpenMsg(true);
     setEditando(false);

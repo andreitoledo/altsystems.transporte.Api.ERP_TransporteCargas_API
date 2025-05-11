@@ -20,7 +20,6 @@ const DadosGerais = ({ clienteId }) => {
   const carregarDados = async () => {
     try {
       const data = await getDadosGeraisByCliente(clienteId);
-      console.log('Resposta da API:', data);
       setDadosGerais(Array.isArray(data) ? data : [data]);
     } catch (err) {
       console.error('Erro ao carregar dados gerais:', err);
@@ -29,16 +28,13 @@ const DadosGerais = ({ clienteId }) => {
   };
 
   useEffect(() => {
-    if (clienteId) {
-      console.log('Cliente ID:', clienteId);
-      carregarDados();
-    }
+    if (clienteId) carregarDados();
   }, [clienteId]);
 
   const handleSalvar = async (dados) => {
     const payload = { ...dados };
     if (!payload.id || payload.id === 0) {
-      delete payload.id; // força criação
+      delete payload.id;
       await createDadosGerais(clienteId, payload);
       setMensagem('Registro criado com sucesso!');
     } else {
@@ -71,7 +67,7 @@ const DadosGerais = ({ clienteId }) => {
         <Button
           variant="contained"
           onClick={() => {
-            setItemSelecionado(null); // limpa antes de abrir o form
+            setItemSelecionado(null);
             setFormVisivel(true);
           }}
         >
@@ -90,15 +86,23 @@ const DadosGerais = ({ clienteId }) => {
         />
       )}
 
-      <Box sx={{ height: 300, width: '100%' }}>
+      <Box sx={{ height: 400, width: '100%' }}>
         {!loading && (
           <DataGrid
             rows={dadosGerais}
             columns={[
               { field: 'id', headerName: 'ID', width: 90 },
-              //{ field: 'cnpj', headerName: 'CNPJ', flex: 1 },
-              //{ field: 'inscricaoEstadual', headerName: 'Inscrição Estadual', flex: 1 },
-              { field: 'dataCadastro', headerName: 'Data de Cadastro', width: 160 },
+              { field: 'ramoAtividade', headerName: 'Ramo de Atividade', flex: 1 },
+              { field: 'tipoCadastro', headerName: 'Tipo de Cadastro', flex: 1 },
+              { field: 'statusCadastro', headerName: 'Ativo?', width: 100, 
+                valueFormatter: (params) => params.value ? 'Sim' : 'Não'
+              },
+              {
+                field: 'dataCadastro',
+                headerName: 'Data de Cadastro',
+                width: 160,
+                valueFormatter: (params) => params.value?.substring(0, 10)
+              },
               {
                 field: 'acoes',
                 headerName: 'Ações',
