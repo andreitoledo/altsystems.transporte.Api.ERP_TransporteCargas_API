@@ -30,8 +30,10 @@ namespace altsystems.transporte.Api.ERP_TransporteCargas_API.Repositories.Implem
             }
             else
             {
-                existente.Cnpj = dados.Cnpj;
-                existente.InscricaoEstadual = dados.InscricaoEstadual;
+                existente.RamoAtividade = dados.RamoAtividade;
+                existente.Observacoes = dados.Observacoes;
+                existente.TipoCadastro = dados.TipoCadastro;
+                existente.StatusCadastro = dados.StatusCadastro;
                 existente.DataCadastro = dados.DataCadastro;
             }
 

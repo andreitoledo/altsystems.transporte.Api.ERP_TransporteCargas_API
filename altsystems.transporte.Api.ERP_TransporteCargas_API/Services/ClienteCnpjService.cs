@@ -20,7 +20,8 @@ namespace altsystems.transporte.Api.ERP_TransporteCargas_API.Services
         public async Task<ClienteCnpjDTO> ObterPorClienteIdAsync(int clienteId)
         {
             var entity = await _repository.GetByClienteIdAsync(clienteId);
-            return _mapper.Map<ClienteCnpjDTO>(entity);
+            return entity == null ? null : _mapper.Map<ClienteCnpjDTO>(entity);
+            //return _mapper.Map<ClienteCnpjDTO>(entity);
         }
 
         public async Task CriarOuAtualizarAsync(int clienteId, ClienteCnpjDTO dto)
@@ -51,12 +52,24 @@ namespace altsystems.transporte.Api.ERP_TransporteCargas_API.Services
 
         public async Task SalvarAsync(int clienteId, ClienteCnpjDTO dto)
         {
-            var entity = _mapper.Map<ClienteCnpj>(dto);
-            entity.ClienteId = clienteId;
+            var existente = await _repository.GetByClienteIdAsync(clienteId);
 
-            await _repository.AddAsync(entity);
+            if (existente != null)
+            {
+                var atualizado = _mapper.Map<ClienteCnpj>(dto);
+                atualizado.Id = existente.Id;
+                atualizado.ClienteId = clienteId;
 
-        }
+                await _repository.UpdateAsync(atualizado);
+            }
+            else
+            {
+                var novo = _mapper.Map<ClienteCnpj>(dto);
+                novo.ClienteId = clienteId;
+
+                await _repository.AddAsync(novo);
+            }
+        }       
 
     }
 }
