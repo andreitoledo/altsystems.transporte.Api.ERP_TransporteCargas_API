@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Grid, TextField, Button, Box } from '@mui/material';
+import InputMask from 'react-input-mask';
 
 const CnpjForm = ({ cnpjData = {}, onSubmit, onCancel }) => {
   const [form, setForm] = useState({
@@ -10,23 +11,38 @@ const CnpjForm = ({ cnpjData = {}, onSubmit, onCancel }) => {
   useEffect(() => {
     if (cnpjData) {
       setForm({
-        cnpj: cnpjData.cnpj || '',
+        id: cnpjData.id || 0,
+        cnpj: cnpjData.cnpj ?? '', // <- ESSENCIAL para preencher o campo!
         dataCadastro: cnpjData.dataCadastro?.substring(0, 10) || ''
+      });
+    } else {
+      setForm({
+        id: 0,
+        cnpj: '',
+        dataCadastro: ''
       });
     }
   }, [cnpjData]);
+
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  // Função para lidar com o envio do formulário
+  // Aqui você pode adicionar a lógica para enviar os dados do formulário
   const handleSubmit = () => {
     if (!form.cnpj || !form.dataCadastro) {
       alert('Preencha todos os campos');
       return;
     }
-    onSubmit(form);
+
+    // Remover pontos, barra e hífen
+    const cnpjLimpo = form.cnpj.replace(/[^\d]/g, '');
+
+    onSubmit({ ...form, cnpj: cnpjLimpo });
   };
+
 
   return (
     <Box sx={{ mb: 2 }}>
@@ -34,6 +50,23 @@ const CnpjForm = ({ cnpjData = {}, onSubmit, onCancel }) => {
         <Grid xs={12} md={6}>
           <TextField label="CNPJ" name="cnpj" value={form.cnpj} onChange={handleChange} fullWidth />
         </Grid>
+
+        {/* <Grid item xs={12} md={6}>
+          <InputMask
+            mask="99.999.999/9999-99"
+            value={form.cnpj}
+            onChange={handleChange}
+          >
+            {() => (
+              <TextField
+                label="CNPJ"
+                name="cnpj"
+                fullWidth
+              />
+            )}
+          </InputMask>
+        </Grid> */}
+
         <Grid xs={12} md={6}>
           <TextField
             label="Data de Cadastro"

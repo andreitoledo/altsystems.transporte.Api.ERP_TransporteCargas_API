@@ -11,9 +11,10 @@ export const createCnpj = async (clienteId, cnpjData) => {
 };
 
 export const updateCnpj = async (clienteId, cnpjData) => {
-  const { data } = await api.put(`/Cliente/${clienteId}/Cnpj`, cnpjData);
+  const { data } = await api.put(`/Cliente/${clienteId}/Cnpj/${cnpjData.id}`, cnpjData);
   return data;
 };
+
 
 export const deleteCnpj = async (clienteId) => {
   await api.delete(`/Cliente/${clienteId}/Cnpj`);
