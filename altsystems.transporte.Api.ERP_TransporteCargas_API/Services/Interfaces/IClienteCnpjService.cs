@@ -8,7 +8,10 @@ namespace altsystems.transporte.Api.ERP_TransporteCargas_API.Services.Interfaces
         Task<ClienteCnpjDTO> ObterPorClienteIdAsync(int clienteId);
         Task CriarOuAtualizarAsync(int clienteId, ClienteCnpjDTO dto);
         Task RemoverAsync(int clienteId);
-        Task SalvarAsync(int clienteId, ClienteCnpjDTO dto);       
+        Task SalvarAsync(int clienteId, ClienteCnpjDTO dto);
+        Task<ClienteCnpj> GetByIdAsync(int id);
+        Task UpdateAsync(ClienteCnpj cnpj);
+
 
     }
 }

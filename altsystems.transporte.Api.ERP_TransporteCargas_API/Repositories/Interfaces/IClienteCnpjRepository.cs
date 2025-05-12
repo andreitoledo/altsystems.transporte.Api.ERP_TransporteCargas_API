@@ -8,5 +8,7 @@ namespace altsystems.transporte.Api.ERP_TransporteCargas_API.Repositories.Interf
         Task AddAsync(ClienteCnpj clienteCnpj);
         Task UpdateAsync(ClienteCnpj clienteCnpj);
         Task DeleteAsync(ClienteCnpj clienteCnpj);
+        Task<ClienteCnpj> GetByIdAsync(int id);
+
     }
 }

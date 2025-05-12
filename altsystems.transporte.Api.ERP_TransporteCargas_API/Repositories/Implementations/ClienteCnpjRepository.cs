@@ -36,5 +36,11 @@ namespace altsystems.transporte.Api.ERP_TransporteCargas_API.Repositories.Implem
             _context.ClienteCnpjs.Remove(clienteCnpj);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<ClienteCnpj> GetByIdAsync(int id)
+        {
+            return await _context.ClienteCnpjs.FirstOrDefaultAsync(x => x.Id == id);
+        }
+
     }
 }

@@ -28,12 +28,19 @@ namespace altsystems.transporte.Api.ERP_TransporteCargas_API.Controllers
             return Ok();
         }
 
-        [HttpPut] // já herda o clienteId da rota do controller
-        public async Task<IActionResult> Put(int clienteId, [FromBody] ClienteCnpjDTO dto)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(int clienteId, int id, ClienteCnpjDTO dto)
         {
-            await _service.CriarOuAtualizarAsync(clienteId, dto);
-            return Ok();
-        }
+            var existente = await _service.GetByIdAsync(id); // ou um método que verifica por ID
+            if (existente == null || existente.ClienteId != clienteId)
+                return NotFound();
+
+            existente.Cnpj = dto.Cnpj;
+            existente.DataCadastro = dto.DataCadastro;
+
+            await _service.UpdateAsync(existente);
+            return NoContent();
+        }       
 
         [HttpDelete] // também herda o clienteId da rota do controller
         public async Task<IActionResult> Delete(int clienteId)

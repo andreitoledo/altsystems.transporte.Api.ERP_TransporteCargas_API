@@ -70,7 +70,18 @@ namespace altsystems.transporte.Api.ERP_TransporteCargas_API.Services
 
                 await _repository.AddAsync(novo);
             }
-        }       
+        }
+
+        public async Task<ClienteCnpj> GetByIdAsync(int id)
+        {
+            return await _repository.GetByIdAsync(id);
+        }
+
+        public async Task UpdateAsync(ClienteCnpj cnpj)
+        {
+            await _repository.UpdateAsync(cnpj);
+        }
+
 
     }
 }
