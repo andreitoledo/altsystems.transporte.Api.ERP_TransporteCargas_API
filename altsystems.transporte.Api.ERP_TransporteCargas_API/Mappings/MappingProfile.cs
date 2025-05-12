@@ -9,10 +9,10 @@ namespace altsystems.transporte.Api.ERP_TransporteCargas_API.Mappings
         public MappingProfile()
         {
             CreateMap<DadosGeraisDTO, DadosGerais>().ReverseMap();
-            CreateMap<ClienteCnpjDTO, ClienteCnpj>().ReverseMap();
-            //CreateMap<ClienteCnpj, ClienteCnpjDTO>();
+            CreateMap<ClienteCnpjDTO, ClienteCnpj>().ReverseMap();           
             CreateMap<InscricaoEstadualDTO, InscricaoEstadual>();
             CreateMap<InscricaoEstadual, InscricaoEstadualDTO>();
+            CreateMap<VeiculoDTO, Veiculo>().ReverseMap();
 
 
         }

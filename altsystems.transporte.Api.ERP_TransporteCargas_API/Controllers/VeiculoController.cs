@@ -2,73 +2,48 @@ using Microsoft.AspNetCore.Mvc;
 using altsystems.transporte.Api.ERP_TransporteCargas_API.DTOs;
 using altsystems.transporte.Api.ERP_TransporteCargas_API.Models;
 using altsystems.transporte.Api.ERP_TransporteCargas_API.Services;
+using ERPTransporte.Services.Interfaces;
 
 namespace altsystems.transporte.Api.ERP_TransporteCargas_API.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class VeiculoController : ControllerBase
     {
-        private readonly VeiculoService _service;
+        private readonly IVeiculoService _service;
 
-        public VeiculoController(VeiculoService service)
+        public VeiculoController(IVeiculoService service)
         {
             _service = service;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<VeiculoDTO>>> GetAll()
-        {
-            var items = await _service.ListarAsync();
-            return Ok(items.Select(x => new VeiculoDTO
-            {
-                Id = x.Id,
-                Placa = x.Placa,
-                Modelo = x.Modelo,
-                Tipo = x.Tipo,
-                Ano = x.Ano,   
-                
-            }));
-        }
+        public async Task<ActionResult<IEnumerable<VeiculoDTO>>> Get() =>
+            Ok(await _service.ObterTodosAsync());
 
         [HttpGet("{id}")]
         public async Task<ActionResult<VeiculoDTO>> Get(int id)
         {
-            var x = await _service.ObterAsync(id);
-            if (x == null) return NotFound();
-
-            return Ok(new VeiculoDTO
-            {
-                Id = x.Id,
-                Placa = x.Placa,
-                Modelo = x.Modelo,
-                Tipo = x.Tipo,
-                Ano = x.Ano,  
-                
-            });
+            var veiculo = await _service.ObterPorIdAsync(id);
+            if (veiculo == null) return NotFound();
+            return Ok(veiculo);
         }
 
         [HttpPost]
-        public async Task<ActionResult<VeiculoDTO>> Post(Veiculo model)
-        {
-            var created = await _service.CriarAsync(model);
-            return CreatedAtAction(nameof(Get), new { id = created.Id }, created);
-        }
+        public async Task<ActionResult<VeiculoDTO>> Post(VeiculoDTO dto) =>
+            Ok(await _service.CriarAsync(dto));
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, Veiculo model)
+        public async Task<IActionResult> Put(int id, VeiculoDTO dto)
         {
-            if (id != model.Id) return BadRequest();
-            await _service.AtualizarAsync(model);
+            await _service.AtualizarAsync(id, dto);
             return NoContent();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var existing = await _service.ObterAsync(id);
-            if (existing == null) return NotFound();
-            await _service.DeletarAsync(id);
+            await _service.RemoverAsync(id);
             return NoContent();
         }
     }

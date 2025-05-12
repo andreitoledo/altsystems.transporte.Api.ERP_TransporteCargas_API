@@ -11,6 +11,7 @@ using altsystems.transporte.Api.ERP_TransporteCargas_API.Services.Interfaces;
 using AutoMapper;
 using altsystems.transporte.Api.ERP_TransporteCargas_API.Mappings;
 using altsystems.transporte.Api.ERP_TransporteCargas_API.Services.altsystems.transporte.Api.ERP_TransporteCargas_API.Services;
+using ERPTransporte.Services.Interfaces;
 
 
 
@@ -78,11 +79,12 @@ builder.Services.AddScoped<IInscricaoEstadualService, InscricaoEstadualService>(
 builder.Services.AddScoped<ClienteService>();
 builder.Services.AddScoped<CargaService>();
 builder.Services.AddScoped<TransportadoraService>();
-builder.Services.AddScoped<VeiculoService>();
+//builder.Services.AddScoped<VeiculoService>();
 builder.Services.AddScoped<IEnderecoService, EnderecoService>();
 builder.Services.AddScoped<IContatoService, ContatoService>();
 builder.Services.AddScoped<IDadosGeraisService, DadosGeraisService>();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
+builder.Services.AddScoped<IVeiculoService, VeiculoService>();
 
 
 

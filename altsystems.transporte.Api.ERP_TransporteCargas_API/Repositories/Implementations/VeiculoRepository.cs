@@ -16,27 +16,28 @@ namespace altsystems.transporte.Api.ERP_TransporteCargas_API.Repositories.Implem
             _context = context;
         }
 
-        public async Task<IEnumerable<Veiculo>> GetAllAsync() => await _context.Veiculos.ToListAsync();
-        public async Task<Veiculo> GetByIdAsync(int id) => await _context.Veiculos.FindAsync(id);
-        public async Task<Veiculo> AddAsync(Veiculo item)
+        public async Task<IEnumerable<Veiculo>> GetAllAsync() =>
+            await _context.Veiculos.ToListAsync();
+
+        public async Task<Veiculo> GetByIdAsync(int id) =>
+            await _context.Veiculos.FindAsync(id);
+
+        public async Task AddAsync(Veiculo veiculo)
         {
-            _context.Veiculos.Add(item);
-            await _context.SaveChangesAsync();
-            return item;
-        }
-        public async Task UpdateAsync(Veiculo item)
-        {
-            _context.Entry(item).State = EntityState.Modified;
+            _context.Veiculos.Add(veiculo);
             await _context.SaveChangesAsync();
         }
-        public async Task DeleteAsync(int id)
+
+        public async Task UpdateAsync(Veiculo veiculo)
         {
-            var item = await _context.Veiculos.FindAsync(id);
-            if (item != null)
-            {
-                _context.Veiculos.Remove(item);
-                await _context.SaveChangesAsync();
-            }
+            _context.Veiculos.Update(veiculo);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteAsync(Veiculo veiculo)
+        {
+            _context.Veiculos.Remove(veiculo);
+            await _context.SaveChangesAsync();
         }
     }
 }

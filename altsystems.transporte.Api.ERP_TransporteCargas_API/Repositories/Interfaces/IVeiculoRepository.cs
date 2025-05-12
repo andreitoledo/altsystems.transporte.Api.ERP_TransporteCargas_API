@@ -8,8 +8,8 @@ namespace altsystems.transporte.Api.ERP_TransporteCargas_API.Repositories.Interf
     {
         Task<IEnumerable<Veiculo>> GetAllAsync();
         Task<Veiculo> GetByIdAsync(int id);
-        Task<Veiculo> AddAsync(Veiculo entity);
-        Task UpdateAsync(Veiculo entity);
-        Task DeleteAsync(int id);
+        Task AddAsync(Veiculo veiculo);
+        Task UpdateAsync(Veiculo veiculo);
+        Task DeleteAsync(Veiculo veiculo);
     }
 }
