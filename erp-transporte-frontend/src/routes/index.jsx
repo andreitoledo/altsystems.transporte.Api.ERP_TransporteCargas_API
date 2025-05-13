@@ -4,6 +4,7 @@ import Dashboard from '../pages/Dashboard';
 import Clientes from '../pages/Clientes';
 import ClienteDetalhe from '../pages/ClienteDetalhes';
 import Veiculos from '../pages/Veiculos'; 
+import Motoristas from '../pages/Motoristas';
 import PrivateRoute from './PrivateRoute';
 
 const AppRoutes = () => (
@@ -24,6 +25,7 @@ const AppRoutes = () => (
       <Route path="/clientes/:id/detalhe" element={<ClienteDetalhe />} />
       {/* <Route path="/veiculos" element={<PrivateRoute><Veiculos /></PrivateRoute>} /> */}
       <Route path="/veiculos" element={<Veiculos />} />
+      <Route path="/motoristas" element={<Motoristas />} />
 
     </Routes>
   </Router>

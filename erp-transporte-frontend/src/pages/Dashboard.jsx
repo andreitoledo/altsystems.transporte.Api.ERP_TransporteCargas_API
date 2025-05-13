@@ -7,8 +7,9 @@ const Dashboard = () => {
     return (
       <div>
         <h1>Dashboard</h1>
-        <button onClick={() => navigate('/clientes')}>Ir para Clientes</button>
-        <button onClick={() => navigate('/veiculos')}>Ir para Veiculos</button>
+        <button onClick={() => navigate('/clientes')}>Clientes</button>
+        <button onClick={() => navigate('/veiculos')}>Veiculos</button>
+        <button onClick={() => navigate('/motoristas')}>Motoristas</button>
       </div>
     );
   };
