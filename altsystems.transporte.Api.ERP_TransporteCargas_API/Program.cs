@@ -73,6 +73,8 @@ builder.Services.AddScoped<IClienteCnpjRepository, ClienteCnpjRepository>();
 builder.Services.AddScoped<IClienteCnpjService, ClienteCnpjService>();
 builder.Services.AddScoped<IInscricaoEstadualRepository, InscricaoEstadualRepository>();
 builder.Services.AddScoped<IInscricaoEstadualService, InscricaoEstadualService>();
+builder.Services.AddScoped<IMotoristaRepository, MotoristaRepository>();
+
 
 
 // Adicionando o serviços
@@ -85,6 +87,7 @@ builder.Services.AddScoped<IContatoService, ContatoService>();
 builder.Services.AddScoped<IDadosGeraisService, DadosGeraisService>();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.AddScoped<IVeiculoService, VeiculoService>();
+builder.Services.AddScoped<IMotoristaService, MotoristaService>();
 
 
 

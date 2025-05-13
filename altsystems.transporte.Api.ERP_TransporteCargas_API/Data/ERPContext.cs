@@ -19,6 +19,7 @@
         public DbSet<DadosGerais> DadosGerais { get; set; }
         public DbSet<ClienteCnpj> ClienteCnpjs { get; set; }
         public DbSet<InscricaoEstadual> InscricoesEstaduais { get; set; }
+        public DbSet<Motorista> Motoristas { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

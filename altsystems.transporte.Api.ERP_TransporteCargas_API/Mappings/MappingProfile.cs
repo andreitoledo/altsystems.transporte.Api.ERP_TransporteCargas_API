@@ -13,6 +13,7 @@ namespace altsystems.transporte.Api.ERP_TransporteCargas_API.Mappings
             CreateMap<InscricaoEstadualDTO, InscricaoEstadual>();
             CreateMap<InscricaoEstadual, InscricaoEstadualDTO>();
             CreateMap<VeiculoDTO, Veiculo>().ReverseMap();
+            CreateMap<MotoristaDTO, Motorista>().ReverseMap();
 
 
         }
