@@ -10,6 +10,7 @@ const Dashboard = () => {
         <button onClick={() => navigate('/clientes')}>Clientes</button>
         <button onClick={() => navigate('/veiculos')}>Veiculos</button>
         <button onClick={() => navigate('/motoristas')}>Motoristas</button>
+        <button onClick={() => navigate('/viagens')}>Viagens</button>
       </div>
     );
   };

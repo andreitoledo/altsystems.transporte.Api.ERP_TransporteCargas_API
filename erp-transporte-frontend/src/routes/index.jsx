@@ -5,6 +5,8 @@ import Clientes from '../pages/Clientes';
 import ClienteDetalhe from '../pages/ClienteDetalhes';
 import Veiculos from '../pages/Veiculos'; 
 import Motoristas from '../pages/Motoristas';
+import Viagens from '../pages/Viagens';
+import ViagemDetalhe from '../pages/ViagemDetalhe';
 import PrivateRoute from './PrivateRoute';
 
 const AppRoutes = () => (
@@ -26,6 +28,9 @@ const AppRoutes = () => (
       {/* <Route path="/veiculos" element={<PrivateRoute><Veiculos /></PrivateRoute>} /> */}
       <Route path="/veiculos" element={<Veiculos />} />
       <Route path="/motoristas" element={<Motoristas />} />
+      <Route path="/viagens" element={<Viagens />} />
+      <Route path="/viagens/:id/detalhe" element={<ViagemDetalhe />} />
+      <Route path="/viagens/nova" element={<ViagemDetalhe />} />
 
     </Routes>
   </Router>
