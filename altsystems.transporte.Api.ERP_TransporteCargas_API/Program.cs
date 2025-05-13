@@ -74,6 +74,8 @@ builder.Services.AddScoped<IClienteCnpjService, ClienteCnpjService>();
 builder.Services.AddScoped<IInscricaoEstadualRepository, InscricaoEstadualRepository>();
 builder.Services.AddScoped<IInscricaoEstadualService, InscricaoEstadualService>();
 builder.Services.AddScoped<IMotoristaRepository, MotoristaRepository>();
+builder.Services.AddScoped<IViagemRepository, ViagemRepository>();
+builder.Services.AddScoped<IItinerarioRepository, ItinerarioRepository>();
 
 
 
@@ -88,6 +90,10 @@ builder.Services.AddScoped<IDadosGeraisService, DadosGeraisService>();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.AddScoped<IVeiculoService, VeiculoService>();
 builder.Services.AddScoped<IMotoristaService, MotoristaService>();
+builder.Services.AddScoped<IViagemService, ViagemService>();
+builder.Services.AddScoped<IItinerarioService, ItinerarioService>();
+
+
 
 
 

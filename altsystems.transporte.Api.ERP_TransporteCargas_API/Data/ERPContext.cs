@@ -20,6 +20,8 @@
         public DbSet<ClienteCnpj> ClienteCnpjs { get; set; }
         public DbSet<InscricaoEstadual> InscricoesEstaduais { get; set; }
         public DbSet<Motorista> Motoristas { get; set; }
+        public DbSet<Viagem> Viagens { get; set; }
+        public DbSet<Itinerario> Itinerarios { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -50,6 +52,16 @@
                 .HasMany(c => c.InscricoesEstaduais)
                 .WithOne(ie => ie.Cliente)
                 .HasForeignKey(ie => ie.ClienteId);
+
+
+            modelBuilder.Entity<Viagem>()
+                .HasMany(v => v.Itinerarios)
+                .WithOne(i => i.Viagem)
+                .HasForeignKey(i => i.ViagemId);
+
+            modelBuilder.Entity<Itinerario>()
+                .HasIndex(i => i.ViagemId);
+
 
         }
 
