@@ -17,6 +17,8 @@ namespace altsystems.transporte.Api.ERP_TransporteCargas_API.Repositories.Implem
         public async Task<IEnumerable<Viagem>> GetAllAsync()
         {
             return await _context.Viagens
+                .Include(v => v.Veiculo)
+                .Include(v => v.Motorista)
                 .Include(v => v.Itinerarios)
                 .ToListAsync();
         }
@@ -24,8 +26,11 @@ namespace altsystems.transporte.Api.ERP_TransporteCargas_API.Repositories.Implem
 
         public async Task<Viagem?> GetByIdAsync(int id)
         {
-            return await _context.Viagens.Include(v => v.Itinerarios)
-                                         .FirstOrDefaultAsync(v => v.Id == id);
+            return await _context.Viagens
+        .Include(v => v.Veiculo)
+        .Include(v => v.Motorista)
+        .Include(v => v.Itinerarios)
+        .FirstOrDefaultAsync(v => v.Id == id);
         }
 
         public async Task AddAsync(Viagem viagem)

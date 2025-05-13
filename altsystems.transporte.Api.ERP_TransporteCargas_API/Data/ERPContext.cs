@@ -62,6 +62,16 @@
             modelBuilder.Entity<Itinerario>()
                 .HasIndex(i => i.ViagemId);
 
+            modelBuilder.Entity<Viagem>()
+                .HasOne(v => v.Veiculo)
+                 .WithMany()
+                 .HasForeignKey(v => v.VeiculoId);
+
+            modelBuilder.Entity<Viagem>()
+                .HasOne(v => v.Motorista)
+                .WithMany()
+                .HasForeignKey(v => v.MotoristaId);
+
 
         }
 
